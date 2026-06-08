@@ -1,0 +1,16 @@
+1. Cenário: Sistema de Gestão de Arena Beach Tennis (ArenaSand)
+A ArenaSand é um complexo esportivo focado na locação de quadras e aulas de Beach Tennis. Para modernizar sua gestão, a empresa necessita de um sistema de banco de dados capaz de controlar seus clientes, as reservas de quadras, a escala de professores e a locação de equipamentos esportivos (como raquetes e bolinhas).
+
+O sistema deve gerenciar as seguintes regras de negócio e restrições:
+
+Jogador_Mensalista: O cliente da arena possui um identificador único, que é o seu CPF (Atributo Chave). O sistema armazena o seu Nome_Completo (Atributo Composto, formado por Nome e Sobrenome), sua data de nascimento e os seus Dias_Disponiveis (Atributo Multivalorado, já que um jogador pode escolher múltiplos dias na semana para praticar, como "Segunda", "Quarta" e "Sexta"). A partir da data de nascimento, o sistema exibe a Idade (Atributo Derivado) do atleta. Um jogador pode realizar diversas reservas ao longo do tempo.
+
+Quadra: A arena possui diversas quadras de areia fina. Cada uma é identificada por um ID_Quadra (Atributo Chave), além de possuir um nome descritivo e o tipo de areia utilizado. Para oferecer um diferencial tecnológico, cada quadra possui exclusivamente uma Camera_Transmissao (Relacionamento 1:1) instalada para gravação das partidas e transmissão de replays.
+
+Camera_Transmissao: Entidade que armazena os dados do equipamento de gravação de cada quadra. Possui um ID_Camera (Atributo Chave), o modelo do equipamento e o IP de rede. Cada câmera está vinculada a apenas uma quadra.
+
+Reserva_Horario: Registra os agendamentos das quadras. É identificada por um ID_Reserva (Atributo Chave) e armazena a data, a hora de início e a hora de término do jogo. O valor final a ser pago é um atributo calculado (Valor_Com_Desconto - Atributo Derivado), que aplica uma redução no preço caso o jogador seja um mensalista ativo. Uma quadra pode receber muitas reservas em horários diferentes, mas cada reserva pertence a uma única quadra (Relacionamento 1:N).
+
+Professor: A arena conta com instrutores para ministrar aulas particulares. Cada professor possui um ID_Professor (Atributo Chave), nome e suas Certificacoes (Atributo Multivalorado, pois ele pode ter múltiplas formações como "CBT", "ITF", "Módulo 1", etc.). Um professor pode ser escalado para ministrar aulas em várias reservas de horários.
+
+Equipamento_Aluguel: Caso os jogadores não tenham material próprio, a arena aluga acessórios. Cada item possui um ID_Equipamento (Atributo Chave), nome do produto (ex: Raquete de Carbono, Tubo de Bolinhas) e o preço da diária. Uma reserva de horário específica pode solicitar vários equipamentos alugados, e o mesmo equipamento pode ser alugado em diferentes reservas ao longo do dia. Isso gera um relacionamento de muitos para muitos (Relacionamento N:N).
